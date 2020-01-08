@@ -54,13 +54,22 @@ public class TimerFragment extends Fragment {
         set = v.findViewById(R.id.txt_editSet);
         timeMinutesWork = v.findViewById(R.id.txt_editWorkMinute);
         timeSecondsWork = v.findViewById(R.id.txt_editWorkSeconds);
+        timeSecondsRest = v.findViewById(R.id.txt_editRestSeconds);
+        timeMinutesRest = v.findViewById(R.id.txt_editRestMinute);
         addButtonWork = v.findViewById(R.id.btn_addWork);
         removeButtonWork = v.findViewById(R.id.btn_removeWork);
+        addButtonRest = v.findViewById(R.id.btn_addRest);
+        removeButtonRest = v.findViewById(R.id.btn_removeRest);
 
         addButtonSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                set.setText( Integer.toString(Integer.parseInt(set.getText().toString())+1));
+                if(set.getText().toString().equals("")){
+                    set.setText("1");
+                }else{
+                    set.setText( Integer.toString(Integer.parseInt(set.getText().toString())+1));
+                }
+
             }
         });
 
@@ -91,90 +100,89 @@ public class TimerFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 if(s.length() != 0 && s.charAt(0) == '0'){
                     String tempSequenze = s.subSequence(1,s.length()).toString();
-                    set.setText((CharSequence)tempSequenze);
+                    set.setText(tempSequenze);
                     Toast.makeText(v.getContext(), "Ungültige Setzahl eingegeben!", Toast.LENGTH_SHORT).show();
 
                 }
             }
         });
 
-        //Convert Seconds to more minutes!
-        timeSecondsWork.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        //Validates the Minutes after you leave the field
+        timeSecondsWork.setOnFocusChangeListener(new CustomFocus(timeSecondsWork,timeMinutesWork));
+        timeSecondsRest.setOnFocusChangeListener(new CustomFocus(timeSecondsRest, timeMinutesRest));
 
+        //Validates calculates the + button
+        addButtonWork.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if(s.length() != 0){
-                    int seconds = Integer.parseInt(s.toString());
-                    int minutesToAdd = 0;
-                    if(!timeMinutesWork.getText().equals("00")){
-                        minutesToAdd += Integer.parseInt(timeMinutesWork.getText().toString());
+            public void onClick(View v) {
+                if(!timeSecondsWork.getText().toString().equals("")) {
+                    if (timeSecondsWork.length() == 1) {
+                        timeSecondsWork.setText("0" + timeSecondsWork.getText());
                     }
-                    boolean finished = false;
-                    if(seconds > 60){
-                        while(seconds % 60 != 0 && !finished){
-                            int minutes = seconds/60;
-                            if(minutes == 0){
-                                if(seconds < 10){
-                                    timeSecondsWork.setText('0'+ Integer.toString(seconds));
-                                }else{
-                                    timeSecondsWork.setText(Integer.toString(seconds));
-                                }
-                                finished = true;
-                            }else{
-                                minutesToAdd ++;
-                                seconds = seconds % 60;
+                    if(timeMinutesWork.getText().toString().equals("")){
+                        timeMinutesWork.setText("00");
+                    }
+                    Character temp0 = timeSecondsWork.getText().charAt(0);
+                    Character temp1 = timeSecondsWork.getText().charAt(1);
+                    int toIncrease = Integer.parseInt(temp1.toString());
+                    if (toIncrease == 9) {
+                        if (Integer.parseInt(timeSecondsWork.getText().toString()) == 59) {
+                            timeSecondsWork.setText("00");
+                            if (!timeMinutesWork.getText().toString().equals("")) {
+                                int toIncreaseMinutes = Integer.parseInt(timeMinutesWork.getText().toString());
+                                timeMinutesWork.setText(Integer.toString(toIncreaseMinutes+1));
+                            } else {
+                                timeMinutesWork.setText("00");
                             }
-
+                        }else{
+                            timeSecondsWork.setText((Integer.parseInt(temp0.toString()) + 1) + "0");
                         }
-                        timeMinutesWork.setText(Integer.toString(minutesToAdd));
+                    } else {
+                        timeSecondsWork.setText(temp0.toString() + (toIncrease + 1));
                     }
+                }else{
+                    timeSecondsWork.setText("00");
                 }
             }
         });
 
-        addButtonWork.setOnClickListener(new View.OnClickListener() {
+        removeButtonWork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!timeSecondsWork.getText().equals("")){
-                    if(timeSecondsWork.getText().charAt(0) == '0'){
-                        Character toIncrease = timeSecondsWork.getText().charAt(1);
-                        if( toIncrease == '9'){
-                            timeSecondsWork.setText("10");
-                        }else{
-                            timeSecondsWork.setText("0" + String.valueOf(Integer.parseInt(toIncrease.toString())+1));
+                if(!timeSecondsWork.getText().toString().equals("")) {
+                    //Return if your Numbers are all 00:00 or 0:00
+                    if(!timeMinutesWork.getText().toString().equals("")){
+                        if(Integer.parseInt(timeMinutesWork.getText().toString()) + Integer.parseInt(timeSecondsWork.getText().toString()) == 0){
+                            return;
                         }
-                    //needs fix!
-                    }else if(timeSecondsWork.getText().charAt(1) == '0'){
-                        Character toIncrease = timeSecondsWork.getText().charAt(1);
-                        Character leading = timeSecondsWork.getText().charAt(0);
-                        if( toIncrease == '9'){
-                            timeSecondsWork.setText(String.valueOf(Integer.parseInt(leading.toString())+1)+ "0");
-                        }else{
-                            timeSecondsWork.setText("0" + String.valueOf(Integer.parseInt(toIncrease.toString())+1));
-                        }
+                    }else{
+                        timeMinutesWork.setText("00");
                     }
-                    /*else {
-                        if (Integer.parseInt(timeSecondsWork.getText().toString()) == 59) {
-                            timeSecondsWork.setText("00");
-                            if (!timeMinutesWork.getText().equals("")) {
-                                timeMinutesWork.setText(Integer.parseInt(timeMinutesWork.getText().toString()) + 1);
+                    //Check for completeness of Numbers
+                    if (timeSecondsWork.length() == 1) {
+                        timeSecondsWork.setText("0" + timeSecondsWork.getText());
+                    }
+                    Character temp0 = timeSecondsWork.getText().charAt(0);
+                    Character temp1 = timeSecondsWork.getText().charAt(1);
+                    int toLower = Integer.parseInt(temp1.toString());
+                    if (toLower == 0) {
+                        if (Integer.parseInt(timeSecondsWork.getText().toString()) == 0) {
+                            timeSecondsWork.setText("59");
+                            if (!timeMinutesWork.getText().toString().equals("")) {
+                                int toLowerMinutes = Integer.parseInt(timeMinutesWork.getText().toString());
+                                timeMinutesWork.setText(Integer.toString(toLowerMinutes-1));
                             } else {
-                                timeMinutesWork.setText("1");
+                                timeMinutesWork.setText("00");
                             }
-                        } else {
-                            timeSecondsWork.setText(Integer.parseInt(timeSecondsWork.getText().toString()) + 1);
+                        }else{
+                            timeSecondsWork.setText((Integer.parseInt(temp0.toString())-1) + "9");
                         }
+                    } else {
+                        timeSecondsWork.setText(temp0.toString() + (toLower - 1));
                     }
-
-                     */
-
+                }else{
+                    timeSecondsWork.setText("00");
                 }
-
             }
         });
     }

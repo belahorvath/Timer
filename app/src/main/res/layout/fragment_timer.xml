@@ -7,82 +7,120 @@
     android:background="@android:color/holo_blue_bright">
 
     <TextView
-        android:id="@+id/txt_set"
+        android:id="@+id/txt_rest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="144dp"
-        android:text="Sets"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="112dp"
+        android:text="Rest"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/txt_work"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:text="Work"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_work" />
 
     <EditText
-        android:id="@+id/txt_editSet"
+        android:id="@+id/txt_editRestMinute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         android:digits="0123456789."
         android:inputType="number"
-        android:text="3"
+        android:text="00"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.427"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_set" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_rest" />
 
-    <ImageButton
-        android:id="@+id/btn_addSet"
+    <EditText
+        android:id="@+id/txt_editRestSeconds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:background="?android:selectableItemBackground"
+        android:digits="0123456789."
+        android:inputType="number"
+        android:text="00"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toEndOf="@+id/txt_editSet"
-        app:layout_constraintTop_toBottomOf="@+id/txt_set"
-        app:srcCompat="@drawable/ic_add" />
-
-    <ImageButton
-        android:id="@+id/btn_removeSet"
-        style="@style/Widget.AppCompat.ImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:background="?android:selectableItemBackground"
-        app:layout_constraintEnd_toStartOf="@+id/txt_editSet"
-        app:layout_constraintHorizontal_bias="0.53"
+        app:layout_constraintHorizontal_bias="0.572"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_set"
-        app:srcCompat="@drawable/ic_remove" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_rest" />
 
     <TextView
-        android:id="@+id/txt_separatorWork"
+        android:id="@+id/txt_separatorRest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text=":"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_work" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_rest" />
+
+    <ImageButton
+        android:id="@+id/btn_removeRest"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="132dp"
+        android:background="?android:selectableItemBackground"
+        app:layout_constraintEnd_toStartOf="@+id/txt_editRestMinute"
+        app:layout_constraintHorizontal_bias="0.547"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_removeWork"
+        app:srcCompat="@drawable/ic_remove" />
+
+    <ImageButton
+        android:id="@+id/btn_addRest"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="132dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:background="?android:selectableItemBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toEndOf="@+id/txt_editRestSeconds"
+        app:layout_constraintTop_toBottomOf="@+id/btn_addWork"
+        app:srcCompat="@drawable/ic_add" />
+
+    <TextView
+        android:id="@+id/txt_work"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:text="Work"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_set" />
+
+    <ImageButton
+        android:id="@+id/btn_removeWork"
+        style="@style/Widget.AppCompat.ImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="136dp"
+        android:background="?android:selectableItemBackground"
+        app:layout_constraintEnd_toStartOf="@+id/txt_editWorkMinute"
+        app:layout_constraintHorizontal_bias="0.547"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_removeSet"
+        app:srcCompat="@drawable/ic_remove" />
 
     <EditText
         android:id="@+id/txt_editWorkMinute"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:digits="0123456789."
         android:inputType="number"
         android:text="00"
@@ -96,7 +134,7 @@
         android:id="@+id/txt_editWorkSeconds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:digits="0123456789."
         android:inputType="number"
         android:text="00"
@@ -111,25 +149,79 @@
         style="@style/Widget.AppCompat.ImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="136dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:background="?android:selectableItemBackground"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.401"
         app:layout_constraintStart_toEndOf="@+id/txt_editWorkSeconds"
         app:layout_constraintTop_toBottomOf="@+id/btn_addSet"
         app:srcCompat="@drawable/ic_add" />
 
+    <TextView
+        android:id="@+id/txt_separatorWork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text=":"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_work" />
+
     <ImageButton
-        android:id="@+id/btn_removeWork"
+        android:id="@+id/btn_removeSet"
         style="@style/Widget.AppCompat.ImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="152dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="16dp"
         android:background="?android:selectableItemBackground"
-        app:layout_constraintEnd_toStartOf="@+id/txt_editWorkMinute"
-        app:layout_constraintHorizontal_bias="0.664"
+        app:layout_constraintEnd_toStartOf="@+id/txt_editSet"
+        app:layout_constraintHorizontal_bias="0.438"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_removeSet"
+        app:layout_constraintTop_toBottomOf="@+id/txt_set"
         app:srcCompat="@drawable/ic_remove" />
+
+    <ImageButton
+        android:id="@+id/btn_addSet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:background="?android:selectableItemBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.602"
+        app:layout_constraintStart_toEndOf="@+id/txt_editSet"
+        app:layout_constraintTop_toBottomOf="@+id/txt_set"
+        app:srcCompat="@drawable/ic_add" />
+
+    <TextView
+        android:id="@+id/txt_set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:text="Sets"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txt_editSet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:digits="0123456789."
+        android:inputType="number"
+        android:text="3"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_set" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
