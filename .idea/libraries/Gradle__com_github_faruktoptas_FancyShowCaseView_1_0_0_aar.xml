@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.faruktoptas:FancyShowCaseView:1.0.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f43414c99ae6cb399e1d0d2c26ebcf8e/jetified-FancyShowCaseView-1.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f43414c99ae6cb399e1d0d2c26ebcf8e/jetified-FancyShowCaseView-1.0.0/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.faruktoptas/FancyShowCaseView/1.0.0/292c4c4e32be73c5116ef65ad7ae933201748650/FancyShowCaseView-1.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.faruktoptas/FancyShowCaseView/1.0.0/9a62cecbb21ae5c4d01a3d695a99c2c4c4d6e5dd/FancyShowCaseView-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
