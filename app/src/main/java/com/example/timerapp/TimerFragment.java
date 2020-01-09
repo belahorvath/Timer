@@ -15,22 +15,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import me.toptas.fancyshowcase.FancyShowCaseView;
-
 public class TimerFragment extends Fragment {
-    ImageButton addButtonSet;
-    ImageButton removeButtonSet;
-    ImageButton addButtonWork;
-    ImageButton removeButtonWork;
-    ImageButton addButtonRest;
-    ImageButton removeButtonRest;
-    ImageButton playButton;
-    ImageButton safeButton;
-    EditText set;
-    EditText timeMinutesWork;
-    EditText timeSecondsWork;
-    EditText timeMinutesRest;
-    EditText timeSecondsRest;
+    private ImageButton addButtonSet;
+    private ImageButton removeButtonSet;
+    private ImageButton addButtonWork;
+    private ImageButton removeButtonWork;
+    private ImageButton addButtonRest;
+    private ImageButton removeButtonRest;
+    private ImageButton playButton;
+    private ImageButton safeButton;
+    private EditText set;
+    private EditText timeMinutesWork;
+    private EditText timeSecondsWork;
+    private EditText timeMinutesRest;
+    private EditText timeSecondsRest;
 
 
 
@@ -44,25 +42,9 @@ public class TimerFragment extends Fragment {
         //Prepare the View
         View v = inflater.inflate(R.layout.fragment_timer,container,false);
 
-        new FancyShowCaseView.Builder(this.getActivity())
-                .focusOn(v.findViewById(R.id.btn_play))
-                .title("Start the Timer")
-                .build()
-                .show();
-
         //All Klick listeners and Validators
         addListeners(v);
-        playButton = v.findViewById(R.id.btn_play);
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, new TimerRunningFragment(Integer.parseInt(timeMinutesWork.getText().toString()),Integer.parseInt(timeSecondsWork.getText().toString()),
-                        Integer.parseInt(timeMinutesRest.getText().toString()),Integer.parseInt(timeSecondsRest.getText().toString()),Integer.parseInt(set.getText().toString())));
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
+
 
         //Return finished fragment view
         return v;
@@ -80,6 +62,23 @@ public class TimerFragment extends Fragment {
         removeButtonWork = v.findViewById(R.id.btn_removeWork);
         addButtonRest = v.findViewById(R.id.btn_addRest);
         removeButtonRest = v.findViewById(R.id.btn_removeRest);
+        playButton = v.findViewById(R.id.btn_play);
+
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ((Integer.parseInt(timeMinutesWork.getText().toString()) + Integer.parseInt(timeSecondsWork.getText().toString())) != 0) {
+                    FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.fragment_container, new TimerRunningFragment(Integer.parseInt(timeMinutesWork.getText().toString()),Integer.parseInt(timeSecondsWork.getText().toString()),
+                            Integer.parseInt(timeMinutesRest.getText().toString()),Integer.parseInt(timeSecondsRest.getText().toString()),Integer.parseInt(set.getText().toString())));
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }else{
+                    Toast.makeText(v.getContext(), "Bitte gib einen Workintervall an!", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
 
         addButtonSet.setOnClickListener(new View.OnClickListener() {
             @Override

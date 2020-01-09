@@ -64,6 +64,8 @@ public class TimerRunningFragment extends Fragment {
                 startStop();
                 if(!overlayOpen){
                     overlay.setVisibility(View.VISIBLE);
+                    ((View)button.getParent()).requestLayout();
+                    button.bringToFront();
                     overlayOpen = true;
                 }else{
                     overlay.setVisibility(View.GONE);

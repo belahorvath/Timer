@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/holo_orange_dark">
 
+
     <TextView
         android:id="@+id/txt_set"
         android:layout_width="wrap_content"
@@ -61,5 +62,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_set" />
 
+    <RelativeLayout
+        android:id="@+id/overlay_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#D0000000"
+        android:visibility="invisible" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
