@@ -50,7 +50,6 @@ public class ChecklistFragment extends Fragment {
             public void onClick(View v) {
                 for(int i = 0;i<aufgabeList.size();i++){
                     if(aufgabeList.get(i).getId() == Integer.parseInt(idAufgabe.getText().toString())) {
-                        Toast.makeText(getContext(), "asdasd", Toast.LENGTH_SHORT).show();
                         Aufgabe aufgabe = new Aufgabe(aufgabeList.get(i).getId(),aufgabenTitel.getText().toString(),aufgabenBeschreibung.getText().toString());
                         aufgabeList.set(i,aufgabe);
                         globalAdapter.notifyDataSetChanged();

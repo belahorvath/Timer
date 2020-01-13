@@ -67,14 +67,15 @@ public class TimerFragment extends Fragment {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if ((Integer.parseInt(timeMinutesWork.getText().toString()) + Integer.parseInt(timeSecondsWork.getText().toString())) != 0) {
+                if ((Integer.parseInt(timeMinutesWork.getText().toString()) + Integer.parseInt(timeSecondsWork.getText().toString())) != 0 &&
+                        (Integer.parseInt(timeMinutesRest.getText().toString()) + Integer.parseInt(timeSecondsRest.getText().toString())) != 0) {
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.fragment_container, new TimerRunningFragment(Integer.parseInt(timeMinutesWork.getText().toString()),Integer.parseInt(timeSecondsWork.getText().toString()),
                             Integer.parseInt(timeMinutesRest.getText().toString()),Integer.parseInt(timeSecondsRest.getText().toString()),Integer.parseInt(set.getText().toString())));
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                 }else{
-                    Toast.makeText(v.getContext(), "Bitte gib einen Workintervall an!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), "Bitte gib einen Work und Rest Intervall an!", Toast.LENGTH_SHORT).show();
                 }
 
             }

@@ -8,8 +8,8 @@
             android:title="Timer" />
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings"
-            android:title="Settings" />
+            android:icon="@drawable/ic_checklist"
+            android:title="Checklist" />
     </group>
 
     <item android:title="Communicate">

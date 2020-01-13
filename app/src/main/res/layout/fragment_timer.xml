@@ -109,7 +109,7 @@
         app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_removeWork"
-        app:srcCompat="@drawable/ic_remove" />
+        app:srcCompat="@drawable/ic_remove_circle" />
 
     <ImageButton
         android:id="@+id/btn_addRest"
@@ -214,7 +214,7 @@
         app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_removeSet"
-        app:srcCompat="@drawable/ic_remove" />
+        app:srcCompat="@drawable/ic_remove_circle" />
 
     <ImageButton
         android:id="@+id/btn_removeSet"
@@ -231,7 +231,7 @@
         app:layout_constraintHorizontal_bias="0.44"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_set"
-        app:srcCompat="@drawable/ic_remove" />
+        app:srcCompat="@drawable/ic_remove_circle" />
 
     <EditText
         android:id="@+id/txt_editWorkMinute"
