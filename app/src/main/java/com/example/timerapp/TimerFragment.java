@@ -1,13 +1,19 @@
 package com.example.timerapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,7 +21,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Array;
+import java.lang.reflect.Type;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class TimerFragment extends Fragment {
+    public static final String SHARED_PREF ="sharedPrefs";
+    public static final String PARAM = "parameters";
     private ImageButton addButtonSet;
     private ImageButton removeButtonSet;
     private ImageButton addButtonWork;
@@ -23,12 +42,14 @@ public class TimerFragment extends Fragment {
     private ImageButton addButtonRest;
     private ImageButton removeButtonRest;
     private ImageButton playButton;
-    private ImageButton safeButton;
+    private Spinner dropdownSpinner;
+    private ImageButton saveButton;
     private EditText set;
     private EditText timeMinutesWork;
     private EditText timeSecondsWork;
     private EditText timeMinutesRest;
     private EditText timeSecondsRest;
+    ArrayList<TimerParameter> dropdownOptions=new ArrayList<TimerParameter>();
 
 
 
@@ -44,10 +65,30 @@ public class TimerFragment extends Fragment {
 
         //All Klick listeners and Validators
         addListeners(v);
+        loadSpinnerData(v);
 
 
         //Return finished fragment view
         return v;
+    }
+
+    private void loadSpinnerData(View v) {
+        dropdownSpinner = v.findViewById(R.id.dropdown_timer);
+
+        SharedPreferences sharedPreferences = v.getContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
+
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(PARAM, "");
+        if(json.equals("")){
+            dropdownOptions.add(new TimerParameter("00","05","00","05","3","Default"));
+        }else{
+            Type type = new TypeToken<List<TimerParameter>>(){}.getType();
+            dropdownOptions = gson.fromJson(json, type);
+        }
+
+        ArrayAdapter<TimerParameter> adapter = new ArrayAdapter<TimerParameter>(v.getContext(),android.R.layout.simple_spinner_item, dropdownOptions);
+        dropdownSpinner.setAdapter(adapter);
+
     }
 
     private void addListeners(final View v){
@@ -63,6 +104,39 @@ public class TimerFragment extends Fragment {
         addButtonRest = v.findViewById(R.id.btn_addRest);
         removeButtonRest = v.findViewById(R.id.btn_removeRest);
         playButton = v.findViewById(R.id.btn_play);
+        saveButton = v.findViewById(R.id.btn_save);
+        dropdownSpinner = v.findViewById(R.id.dropdown_timer);
+
+        dropdownSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TimerParameter param = (TimerParameter) dropdownSpinner.getSelectedItem();
+                set.setText(param.getSet());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = v.getContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                TimerParameter tempParameter = new TimerParameter(timeMinutesWork.getText().toString(), timeSecondsWork.getText().toString(),
+                        timeMinutesRest.getText().toString(),timeSecondsRest.getText().toString(),set.getText().toString(),Integer.toString(dropdownOptions.size()+1));
+                dropdownOptions.add(tempParameter);
+
+                Gson gson = new Gson();
+                String json = gson.toJson(dropdownOptions);
+                editor.putString(PARAM, json);
+
+
+                Toast.makeText(v.getContext(), "Saved preset!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override

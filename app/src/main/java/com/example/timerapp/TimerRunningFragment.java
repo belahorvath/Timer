@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,7 +56,6 @@ public class TimerRunningFragment extends Fragment {
         workText = v.findViewById(R.id.txt_work);
         setText = v.findViewById(R.id.txt_set);
         activityText = v.findViewById(R.id.txt_activity);
-        overlay = v.findViewById(R.id.overlay_view);
         setText.setText(Integer.toString(setCounter));
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -63,12 +63,10 @@ public class TimerRunningFragment extends Fragment {
             public void onClick(View v) {
                 startStop();
                 if(!overlayOpen){
-                    overlay.setVisibility(View.VISIBLE);
-                    ((View)button.getParent()).requestLayout();
-                    button.bringToFront();
+                    //OPEN OVERLAY DIALOG
                     overlayOpen = true;
                 }else{
-                    overlay.setVisibility(View.GONE);
+                    //CLOSE OVERLAY DIALOG
                     overlayOpen = false;
                 }
             }
