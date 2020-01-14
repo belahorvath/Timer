@@ -3,6 +3,7 @@ package com.example.timerapp;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -13,14 +14,18 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 public class TimerRunningFragment extends Fragment {
-    int setCounter;
+    private int setCounter;
     private ImageButton button;
     private TextView workText;
     private TextView setText;
     private TextView activityText;
     private View overlay;
+    private ImageButton restartButton;
+    private TextView restartText;
+    private TextView pauseText;
 
     private long workTimeLeftMillies;
     private long restTimeLeftMillies;
@@ -33,9 +38,17 @@ public class TimerRunningFragment extends Fragment {
     private boolean timerRunning;
     private boolean overlayOpen = false;
     private CountDownTimer countDownTimer;
+    private int workMinutes;
+    private int workSeconds;
+    private int restMinutes;
+    private int restSeconds;
 
 
     public TimerRunningFragment(int workMinutes,int workSeconds, int restMinutes, int restSeconds, int setCounter){
+        this.workMinutes = workMinutes;
+        this.workSeconds = workSeconds;
+        this.restMinutes = restMinutes;
+        this.restSeconds = restSeconds;
         //Empty Constructor
 
         this.workTimeLeftMillies = (workMinutes*60 + workSeconds) * 1000;
@@ -57,6 +70,9 @@ public class TimerRunningFragment extends Fragment {
         setText = v.findViewById(R.id.txt_set);
         activityText = v.findViewById(R.id.txt_activity);
         setText.setText(Integer.toString(setCounter));
+        restartButton = v.findViewById(R.id.btn_restart);
+        restartText = v.findViewById(R.id.txt_restart);
+        pauseText = v.findViewById(R.id.txt_pause);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,10 +81,27 @@ public class TimerRunningFragment extends Fragment {
                 if(!overlayOpen){
                     //OPEN OVERLAY DIALOG
                     overlayOpen = true;
+                    restartButton.setVisibility(View.VISIBLE);
+                    restartText.setVisibility(View.VISIBLE);
+                    pauseText.setVisibility(View.VISIBLE);
                 }else{
                     //CLOSE OVERLAY DIALOG
                     overlayOpen = false;
+                    restartButton.setVisibility(View.GONE);
+                    restartText.setVisibility(View.GONE);
+                    pauseText.setVisibility(View.GONE);
                 }
+            }
+        });
+
+        restartButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, new TimerFragment());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                return true;
             }
         });
         startStop();
@@ -156,6 +189,10 @@ public class TimerRunningFragment extends Fragment {
             isWorking = false;
             isPrepairing = false;
             activityText.setText("FINISHED");
+            button.setVisibility(View.GONE);
+            restartButton.setVisibility(View.VISIBLE);
+            restartText.setVisibility(View.VISIBLE);
+            pauseText.setVisibility(View.VISIBLE);
             this.getView().setBackgroundColor(getResources().getColor(android.R.color.holo_red_light));
         }
     }

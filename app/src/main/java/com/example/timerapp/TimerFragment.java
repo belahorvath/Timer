@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +68,6 @@ public class TimerFragment extends Fragment {
         addListeners(v);
         loadSpinnerData(v);
 
-
         //Return finished fragment view
         return v;
     }
@@ -76,12 +76,21 @@ public class TimerFragment extends Fragment {
         dropdownSpinner = v.findViewById(R.id.dropdown_timer);
 
         SharedPreferences sharedPreferences = v.getContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
+        /* Clear Preferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+         */
 
         Gson gson = new Gson();
         String json = sharedPreferences.getString(PARAM, "");
         if(json.equals("")){
-            dropdownOptions.add(new TimerParameter("00","05","00","05","3","Default"));
+            TimerParameter firstItem = new TimerParameter("00","10","00","30","15","Hangtraining");
+            TimerParameter secondItem = new TimerParameter("00","35","00","05","8","Bauchtraining");
+            addItemToSharedPreferences(v, firstItem);
+            addItemToSharedPreferences(v,secondItem);
         }else{
+            Log.i("INFO", json);
             Type type = new TypeToken<List<TimerParameter>>(){}.getType();
             dropdownOptions = gson.fromJson(json, type);
         }
@@ -89,6 +98,23 @@ public class TimerFragment extends Fragment {
         ArrayAdapter<TimerParameter> adapter = new ArrayAdapter<TimerParameter>(v.getContext(),android.R.layout.simple_spinner_item, dropdownOptions);
         dropdownSpinner.setAdapter(adapter);
 
+    }
+
+    private void addItemToSharedPreferences(View v, TimerParameter newItem){
+        SharedPreferences sharedPreferences = v.getContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        dropdownOptions.add(newItem);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(dropdownOptions);
+
+        Log.i("INFO",json);
+        editor.putString(PARAM, json);
+        editor.commit();
+
+
+        Toast.makeText(v.getContext(), "Saved preset as: " + newItem.getName() +  "!", Toast.LENGTH_SHORT).show();
     }
 
     private void addListeners(final View v){
@@ -112,6 +138,10 @@ public class TimerFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 TimerParameter param = (TimerParameter) dropdownSpinner.getSelectedItem();
                 set.setText(param.getSet());
+                timeMinutesWork.setText(param.getWorkMinutes());
+                timeMinutesRest.setText(param.getRestMinutes());
+                timeSecondsRest.setText(param.getRestSeconds());
+                timeSecondsWork.setText(param.getWorkSeconds());
             }
 
             @Override
@@ -123,18 +153,9 @@ public class TimerFragment extends Fragment {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = v.getContext().getSharedPreferences(SHARED_PREF, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                TimerParameter tempParameter = new TimerParameter(timeMinutesWork.getText().toString(), timeSecondsWork.getText().toString(),
+                TimerParameter newItem = new TimerParameter(timeMinutesWork.getText().toString(), timeSecondsWork.getText().toString(),
                         timeMinutesRest.getText().toString(),timeSecondsRest.getText().toString(),set.getText().toString(),Integer.toString(dropdownOptions.size()+1));
-                dropdownOptions.add(tempParameter);
-
-                Gson gson = new Gson();
-                String json = gson.toJson(dropdownOptions);
-                editor.putString(PARAM, json);
-
-
-                Toast.makeText(v.getContext(), "Saved preset!", Toast.LENGTH_SHORT).show();
+                addItemToSharedPreferences(v, newItem);
             }
         });
 

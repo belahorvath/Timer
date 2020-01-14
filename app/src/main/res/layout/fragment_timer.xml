@@ -262,10 +262,12 @@
 
     <Spinner
         android:id="@+id/dropdown_timer"
-        android:layout_width="254dp"
+        android:layout_width="200dp"
         android:layout_height="33dp"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
