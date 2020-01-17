@@ -11,4 +11,4 @@ In dieser App wurde mit Drawers, Toolbars, Fragments sowie anderen Schnickschnac
 
 
 ## Später
-* ChecklistenAPP Lina.
+* ChecklistenAPP Lina... Prototype implementiert mit RecyclerView
