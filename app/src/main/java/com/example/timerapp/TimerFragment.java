@@ -166,7 +166,7 @@ public class TimerFragment extends Fragment {
                         (Integer.parseInt(timeMinutesRest.getText().toString()) + Integer.parseInt(timeSecondsRest.getText().toString())) != 0) {
                     FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.fragment_container, new TimerRunningFragment(Integer.parseInt(timeMinutesWork.getText().toString()),Integer.parseInt(timeSecondsWork.getText().toString()),
-                            Integer.parseInt(timeMinutesRest.getText().toString()),Integer.parseInt(timeSecondsRest.getText().toString()),Integer.parseInt(set.getText().toString())));
+                            Integer.parseInt(timeMinutesRest.getText().toString()),Integer.parseInt(timeSecondsRest.getText().toString()),Integer.parseInt(set.getText().toString())),"RUNNING_FRAGMENT");
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                 }else{
