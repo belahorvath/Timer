@@ -3,9 +3,11 @@ In dieser App wurde mit Drawers, Toolbars, Fragments sowie anderen Schnickschnac
 
 ## TODO:
 
-- [ ] Speicherbutton erstellen und speichern
-- [ ] Rest muss geprüft werden dass es nicht 0 ist. wenn 0 dann wird der Timer nicht gestartet da 0 millisekunden.
-- [ ] Overlay richtig über den screen legen
+- [x] Speicherbutton erstellen und speichern
+- [x] Rest muss geprüft werden dass es nicht 0 ist. wenn 0 dann wird der Timer nicht gestartet da 0 millisekunden.
+- [-] Overlay richtig über den screen legen 
+- [x] Logo anpassen
+- [ ] Sounds für den Timer erstellen
 
 
 ## Später
